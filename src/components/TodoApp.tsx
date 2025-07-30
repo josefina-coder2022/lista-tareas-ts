@@ -2,18 +2,18 @@ import { useState, useEffect } from "react"
 import ListaTareas from "./ListaTareas"
 import ContadorTareas from "./ContadorTareas"
 import type { Tarea } from "../types/tarea"
-import Swal from "sweetalert2";
+import Swal from "sweetalert2"
 
 
 
 
 
 const TodoApp = () => {
-  const [nuevaTarea, setNuevaTarea] = useState<string>("");
-  const [nuevaFecha, setNuevaFecha] = useState<string>("");
-  const [listaTareas, setListaTareas] = useState<Tarea[]>([]);
-  const [filtroFecha, setFiltroFecha] = useState<string>("");
-  const [ordenAscendente, setOrdenAscendente] = useState<boolean>(true);
+  const [nuevaTarea, setNuevaTarea] = useState<string>("")
+  const [nuevaFecha, setNuevaFecha] = useState<string>("")
+  const [listaTareas, setListaTareas] = useState<Tarea[]>([])
+  const [filtroFecha, setFiltroFecha] = useState<string>("")
+  const [ordenAscendente, setOrdenAscendente] = useState<boolean>(true)
 
 
   // Cargar tareas desde localStorage
@@ -25,10 +25,10 @@ const TodoApp = () => {
           ...t,
           fecha: new Date(t.fecha),
         })
-      );
+      )
       setListaTareas(tareasParseadas);
     }
-  }, []);
+  }, [])
 
   //Guardar tareas en el LocalStorge cada vez que cambian las tareas
   useEffect(() => {
@@ -62,8 +62,8 @@ const TodoApp = () => {
 
   //Borrar tarea por índice
   const handleBorrarTarea = (index: number) => {
-    setListaTareas((tareas) => tareas.filter((_, i) => i !== index)); //acá el index que le pase lo borra y devuelve todas las tareas que no correspondan a ese indice, filtra todas las tareas que sean distintas a ese indice
-  };
+    setListaTareas((tareas) => tareas.filter((_, i) => i !== index)) 
+  }
 
   //Marcar/Desmarcar como completada
   const toggleCompletarTarea = (index: number) => {
@@ -71,26 +71,27 @@ const TodoApp = () => {
       prevTareas.map((tarea, i) =>
         i === index ? { ...tarea, completada: !tarea.completada } : tarea
       )
-    );
-  };
+    )
+  }
 
   // Filtrar y ordenar
   const tareasFiltradasYOrdenadas = listaTareas
    
     .filter((tarea) => {
-      if (!filtroFecha) return true;
-      const fechaTarea = tarea.fecha.toISOString().split("T")[0];
-      return fechaTarea === filtroFecha;
+      if (!filtroFecha) return true
+      const fechaTarea = tarea.fecha.toISOString().split("T")[0]
+      return fechaTarea === filtroFecha
     })
     .sort((a, b) => {
       return ordenAscendente
         ? a.fecha.getTime() - b.fecha.getTime()
-        : b.fecha.getTime() - a.fecha.getTime();
-    });
+        : b.fecha.getTime() - a.fecha.getTime()
+    })
   
   
   return (
     <div>
+
       <h1>Lista de Tareas</h1>
 
       {/* Formulario para nueva tarea */}
@@ -146,7 +147,7 @@ const TodoApp = () => {
         toggleCompletarTarea={toggleCompletarTarea}
       />
     </div>
-  );
+  )
 }
 
 export default TodoApp
